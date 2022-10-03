@@ -1,0 +1,803 @@
+<?xml version="1.0" encoding="utf-8"?>
+<libraries>
+  <library>
+    <name>Text</name>
+    <description>Text transformation enable you to transform and manipulate text.</description>
+    <transformations>
+      <transformation>
+        <name>right_trim</name>
+        <description>Trim whitespace or other characters from the right return the result. The mask text can be any
+          string of text.
+        </description>
+        <parameters>
+          <parameter>
+            <name>mask</name>
+            <description></description>
+            <type>String</type>
+            <optional>false</optional>
+            <default_value>\u0020</default_value>
+          </parameter>
+        </parameters>
+        <groovy_template>{target -&gt; if (#{mask} == &quot;\\u0020&quot;){ return target.replaceAll(&quot;(^.*[^ ]+)
+          *\$&quot;, &apos;\$1&apos;); }else{ return target.replaceAll( &quot;(.*)&quot;+#{mask}+&quot;\$&quot;, &quot;\$1&quot;);
+          } }(#{target})
+        </groovy_template>
+        <multi_arg>
+          <enabled>false</enabled>
+          <type></type>
+        </multi_arg>
+      </transformation>
+      <transformation>
+        <name>trim</name>
+        <description>Trim whitespace or other characters from both sides and return the result. The mask text can be any
+          string of text.
+        </description>
+        <parameters>
+          <parameter>
+            <name>mask</name>
+            <description></description>
+            <type>String</type>
+            <optional>false</optional>
+            <default_value>\u0020</default_value>
+          </parameter>
+        </parameters>
+        <groovy_template>{target -&gt; if (#{mask} == &quot;\\u0020&quot;){ return target.replaceAll(&quot;^ *([^ ].*[^
+          ]) *\$&quot;, &apos;\$1&apos;); }else{ return target.replaceAll( &quot;^&quot;+#{mask}+&quot;(.*)&quot;+#{mask}+&quot;\$&quot;,
+          &quot;\$1&quot;);}}(#{target})
+        </groovy_template>
+        <multi_arg>
+          <enabled>false</enabled>
+          <type></type>
+        </multi_arg>
+      </transformation>
+      <transformation>
+        <name>regex_replace</name>
+        <description>Perform a regular expression search and replace on the target text.</description>
+        <parameters>
+          <parameter>
+            <name>replacement</name>
+            <description></description>
+            <type>String</type>
+            <optional>false</optional>
+            <default_value></default_value>
+          </parameter>
+          <parameter>
+            <name>regex</name>
+            <description></description>
+            <type>String</type>
+            <optional>false</optional>
+            <default_value></default_value>
+          </parameter>
+        </parameters>
+        <groovy_template>{target -&gt; target.replaceAll(#{regex}, #{replacement})}(#{target})</groovy_template>
+        <multi_arg>
+          <enabled>false</enabled>
+          <type></type>
+        </multi_arg>
+      </transformation>
+      <transformation>
+        <name>replace</name>
+        <description>Replace a text phrase with another. Search can be any word in the value and the replacement can be
+          anything.
+        </description>
+        <parameters>
+          <parameter>
+            <name>replacement</name>
+            <description></description>
+            <type>String</type>
+            <optional>false</optional>
+            <default_value></default_value>
+          </parameter>
+          <parameter>
+            <name>search</name>
+            <description></description>
+            <type>String</type>
+            <optional>false</optional>
+            <default_value></default_value>
+          </parameter>
+        </parameters>
+        <groovy_template>{target -&gt; target.replace(#{search}, #{replacement})}(#{target})</groovy_template>
+        <multi_arg>
+          <enabled>false</enabled>
+          <type></type>
+        </multi_arg>
+      </transformation>
+      <transformation>
+        <name>format_string</name>
+        <description>Formats text with variable substitution. %s is used to replace text.</description>
+        <parameters>
+        </parameters>
+        <groovy_template>{target -&gt; String.format(target, #{_multiArg_})}(#{target})</groovy_template>
+        <multi_arg>
+          <enabled>true</enabled>
+          <type>String</type>
+        </multi_arg>
+      </transformation>
+      <transformation>
+        <name>ends_width</name>
+        <description>Returns whether or not the expression is present at the end. The search term can be any string of
+          text. This transformation returns a &quot;true&quot; or &quot;false&quot; response.
+        </description>
+        <parameters>
+          <parameter>
+            <name>search</name>
+            <description></description>
+            <type>String</type>
+            <optional>false</optional>
+            <default_value></default_value>
+          </parameter>
+        </parameters>
+        <groovy_template>{target -&gt; target.endsWith(#{search})} (#{target})</groovy_template>
+        <multi_arg>
+          <enabled>false</enabled>
+          <type>String</type>
+        </multi_arg>
+      </transformation>
+      <transformation>
+        <name>string_legth</name>
+        <description>Returns the number of characters of a string.</description>
+        <parameters>
+        </parameters>
+        <groovy_template>{target -&gt; target.length()}(#{target})</groovy_template>
+        <multi_arg>
+          <enabled>false</enabled>
+          <type></type>
+        </multi_arg>
+      </transformation>
+      <transformation>
+        <name>contains</name>
+        <description>Returns whether or not the expression is found and is case-sensitive. The search term can be any
+          string of text. This returns a &quot;true&quot; or &quot;false&quot; response.
+        </description>
+        <parameters>
+          <parameter>
+            <name>search</name>
+            <description></description>
+            <type>String</type>
+            <optional>false</optional>
+            <default_value></default_value>
+          </parameter>
+        </parameters>
+        <groovy_template>{target -&gt; target.contains(#{search})}(#{target})</groovy_template>
+        <multi_arg>
+          <enabled>false</enabled>
+          <type></type>
+        </multi_arg>
+      </transformation>
+      <transformation>
+        <name>concat</name>
+        <description>Concatenates traget value with value together by an optional separator. The value can be any text
+          and the separator can be anything: + , -, _, a space, etc...
+        </description>
+        <parameters>
+          <parameter>
+            <name>separator</name>
+            <description>The separator is the value that will separate the target and the value, by default is a single
+              space (\u0020 in unicode)
+            </description>
+            <type>String</type>
+            <optional>true</optional>
+            <default_value>\u0020</default_value>
+          </parameter>
+          <parameter>
+            <name>value</name>
+            <description></description>
+            <type>String</type>
+            <optional>false</optional>
+            <default_value></default_value>
+          </parameter>
+        </parameters>
+        <groovy_template>{target-&gt; target+#{separator}+#{value}}(#{target})</groovy_template>
+        <multi_arg>
+          <enabled>false</enabled>
+          <type></type>
+        </multi_arg>
+      </transformation>
+      <transformation>
+        <name>capitalize</name>
+        <description>Converts the first letter of each word to a capital letter</description>
+        <parameters>
+        </parameters>
+        <groovy_template>{target -&gt; target.capitalize()}(#{target})</groovy_template>
+        <multi_arg>
+          <enabled>false</enabled>
+          <type></type>
+        </multi_arg>
+      </transformation>
+      <transformation>
+        <name>ci_contains</name>
+        <description>Returns whether or not the case-insensitive expression is found. The search term can be any string
+          of text.
+          This returns a &quot;true&quot; or &quot;false&quot; response.
+        </description>
+        <parameters>
+          <parameter>
+            <name>search</name>
+            <description></description>
+            <type>String</type>
+            <optional>false</optional>
+            <default_value></default_value>
+          </parameter>
+        </parameters>
+        <groovy_template>{ target -&gt; target.toLowerCase().contains(#{search}.toLowerCase()) }(#{target})
+        </groovy_template>
+        <multi_arg>
+          <enabled>false</enabled>
+          <type></type>
+        </multi_arg>
+      </transformation>
+      <transformation>
+        <name>index</name>
+        <description>Returns the index of the case-sensitive expression or false if it can&apos;t be found. The search
+          term can be any string of text.returns an integer value of where the character(s) exist in the string.
+        </description>
+        <parameters>
+          <parameter>
+            <name>search</name>
+            <description></description>
+            <type>String</type>
+            <optional>false</optional>
+            <default_value></default_value>
+          </parameter>
+        </parameters>
+        <groovy_template>{ target -&gt; target.indexOf(#{search}) }(#{target})</groovy_template>
+        <multi_arg>
+          <enabled>false</enabled>
+          <type></type>
+        </multi_arg>
+      </transformation>
+      <transformation>
+        <name>ci_index</name>
+        <description>Returns the index of the case-insensitive expression or false if it can&apos;t be found. The search
+          term can be any string of text.
+          Returns an integer value of where the character(s) exist in the string.
+        </description>
+        <parameters>
+          <parameter>
+            <name>search</name>
+            <description></description>
+            <type>String</type>
+            <optional>false</optional>
+            <default_value></default_value>
+          </parameter>
+        </parameters>
+        <groovy_template>{ target -&gt; target.toLowerCase().indexOf(#{search}.toLowerCase()) }(#{target})
+        </groovy_template>
+        <multi_arg>
+          <enabled>false</enabled>
+          <type></type>
+        </multi_arg>
+      </transformation>
+      <transformation>
+        <name>ci_ends_width</name>
+        <description>Returns whether or not the case-insensitive expression is present at the end. The search term can
+          be any text string. This returns a &quot;true&quot; or &quot;false&quot; answer.
+        </description>
+        <parameters>
+          <parameter>
+            <name>search</name>
+            <description></description>
+            <type>String</type>
+            <optional>false</optional>
+            <default_value></default_value>
+          </parameter>
+        </parameters>
+        <groovy_template>{ target -&gt; target.toLowerCase().endsWith(#{search}.toLowerCase())}(#{target})
+        </groovy_template>
+        <multi_arg>
+          <enabled>false</enabled>
+          <type></type>
+        </multi_arg>
+      </transformation>
+      <transformation>
+        <name>ci_starts_with</name>
+        <description>Returns whether or not the case-insensitive expression is present at the beginning. The search term
+          can be any string of text.This returns a &quot;true&quot; or &quot;false&quot; response.
+        </description>
+        <parameters>
+          <parameter>
+            <name>search</name>
+            <description></description>
+            <type>String</type>
+            <optional>false</optional>
+            <default_value></default_value>
+          </parameter>
+        </parameters>
+        <groovy_template>{ target -&gt; target.toLowerCase().startsWith(#{search}.toLowerCase()) }(#{target})
+        </groovy_template>
+        <multi_arg>
+          <enabled>false</enabled>
+          <type></type>
+        </multi_arg>
+      </transformation>
+      <transformation>
+        <name>starts_with</name>
+        <description>Returns whether or not the expression is present at the beginning. The search term can be any
+          string of text and is case-sensitive.This returns a &quot;true&quot; or &quot;false&quot; response.
+        </description>
+        <parameters>
+          <parameter>
+            <name>search</name>
+            <description></description>
+            <type>String</type>
+            <optional>false</optional>
+            <default_value></default_value>
+          </parameter>
+        </parameters>
+        <groovy_template>{ target -&gt; target.startsWith(#{search}) }(#{target})</groovy_template>
+        <multi_arg>
+          <enabled>false</enabled>
+          <type></type>
+        </multi_arg>
+      </transformation>
+      <transformation>
+        <name>sub_string</name>
+        <description>Extracts a sub-string of text. the start index character is included but the end index character is
+          not
+        </description>
+        <parameters>
+          <parameter>
+            <name>end</name>
+            <description></description>
+            <type>Integer</type>
+            <optional>false</optional>
+            <default_value></default_value>
+          </parameter>
+          <parameter>
+            <name>start</name>
+            <description></description>
+            <type>Integer</type>
+            <optional>false</optional>
+            <default_value></default_value>
+          </parameter>
+        </parameters>
+        <groovy_template>{target -&gt; if (end == &quot;null&quot;) return target.substring(#{start}); else return
+          target.substring(#{start}, #{end})}(#{target})
+        </groovy_template>
+        <multi_arg>
+          <enabled>false</enabled>
+          <type></type>
+        </multi_arg>
+      </transformation>
+      <transformation>
+        <name>to_lower</name>
+        <description>Converts all characters to lower case and returns the result</description>
+        <parameters>
+        </parameters>
+        <groovy_template>{target -&gt; target.toLowerCase()}(#{target})</groovy_template>
+        <multi_arg>
+          <enabled>false</enabled>
+          <type></type>
+        </multi_arg>
+      </transformation>
+      <transformation>
+        <name>to_upper</name>
+        <description>Converts all characters to upper case and returns the result</description>
+        <parameters>
+        </parameters>
+        <groovy_template>{target -&gt; target.toUpperCase()}(#{target})</groovy_template>
+        <multi_arg>
+          <enabled>false</enabled>
+          <type></type>
+        </multi_arg>
+      </transformation>
+      <transformation>
+        <name>left_trim</name>
+        <description>Trim whitespace or other characters from the left side and return the result. The mask text can be
+          any string of text.
+        </description>
+        <parameters>
+          <parameter>
+            <name>mask</name>
+            <description></description>
+            <type>String</type>
+            <optional>false</optional>
+            <default_value>\u0020</default_value>
+          </parameter>
+        </parameters>
+        <groovy_template>{target -&gt; if (#{mask} == &quot;\\u0020&quot;){ return target.replaceAll(&quot;^ *([^ ]+.*)&quot;,
+          &apos;\$1&apos;); }else{ return target.replaceAll( &quot;^&quot;+#{mask}+&quot;(.*)&quot;, &quot;\$1&quot;); }
+          }(#{target})
+        </groovy_template>
+        <multi_arg>
+          <enabled>false</enabled>
+          <type></type>
+        </multi_arg>
+      </transformation>
+    </transformations>
+  </library>
+  <library>
+    <name>Date</name>
+    <description>date transformations libraries</description>
+    <transformations>
+      <transformation>
+        <name>minus_days</name>
+        <description>Subtract days from the given date.</description>
+        <parameters>
+          <parameter>
+            <name>days</name>
+            <description></description>
+            <type>Integer</type>
+            <optional>false</optional>
+            <default_value></default_value>
+          </parameter>
+        </parameters>
+        <groovy_template>{target -&gt; Date.parse(&quot;MM/dd/yyyy&quot;, target).plus((-1)*#{days})}(#{target})
+        </groovy_template>
+        <multi_arg>
+          <enabled>false</enabled>
+          <type></type>
+        </multi_arg>
+      </transformation>
+      <transformation>
+        <name>plus_dayes</name>
+        <description>Add days to the given date.</description>
+        <parameters>
+          <parameter>
+            <name>days</name>
+            <description></description>
+            <type>Integer</type>
+            <optional>false</optional>
+            <default_value></default_value>
+          </parameter>
+        </parameters>
+        <groovy_template>{target -&gt; Date.parse(&quot;MM/dd/yyyy&quot;, target).plus(#{days})}(#{target})
+        </groovy_template>
+        <multi_arg>
+          <enabled>false</enabled>
+          <type></type>
+        </multi_arg>
+      </transformation>
+      <transformation>
+        <name>plus_months</name>
+        <description>Add months to the given date.</description>
+        <parameters>
+          <parameter>
+            <name>months</name>
+            <description></description>
+            <type>Integer</type>
+            <optional>false</optional>
+            <default_value></default_value>
+          </parameter>
+        </parameters>
+        <groovy_template>{target -&gt; Date.parse(&quot;MM/dd/yyyy&quot;, target).plus(30*#{months})}(#{target})
+        </groovy_template>
+        <multi_arg>
+          <enabled>false</enabled>
+          <type></type>
+        </multi_arg>
+      </transformation>
+      <transformation>
+        <name>subtract_months</name>
+        <description>Subtract months from the given date.</description>
+        <parameters>
+          <parameter>
+            <name>months</name>
+            <description></description>
+            <type>Integer</type>
+            <optional>false</optional>
+            <default_value></default_value>
+          </parameter>
+        </parameters>
+        <groovy_template>{target -&gt; Date.parse(&quot;MM/dd/yyyy&quot;, target).plus((-30)*#{months})}(#{target})
+        </groovy_template>
+        <multi_arg>
+          <enabled>false</enabled>
+          <type></type>
+        </multi_arg>
+      </transformation>
+      <transformation>
+        <name>plus_years</name>
+        <description>Add years to the given date.</description>
+        <parameters>
+          <parameter>
+            <name>years</name>
+            <description></description>
+            <type>Integer</type>
+            <optional>false</optional>
+            <default_value></default_value>
+          </parameter>
+        </parameters>
+        <groovy_template>{target -&gt; Date.parse(&quot;MM/dd/yyyy&quot;, target).plus((30*12)*#{years})}(#{target})
+        </groovy_template>
+        <multi_arg>
+          <enabled>false</enabled>
+          <type></type>
+        </multi_arg>
+      </transformation>
+      <transformation>
+        <name>subtract_years</name>
+        <description>Subtract years from the given date.</description>
+        <parameters>
+          <parameter>
+            <name>years</name>
+            <description></description>
+            <type>Integer</type>
+            <optional>false</optional>
+            <default_value></default_value>
+          </parameter>
+        </parameters>
+        <groovy_template>{target -&gt; Date.parse(&quot;MM/dd/yyyy&quot;, target).plus((-30*12)*#{years})}(#{target})
+        </groovy_template>
+        <multi_arg>
+          <enabled>false</enabled>
+          <type></type>
+        </multi_arg>
+      </transformation>
+      <transformation>
+        <name>get_month</name>
+        <description>Get the month of the year</description>
+        <parameters>
+        </parameters>
+        <groovy_template>{target -&gt; Date.parse(&quot;MM/dd/yyyy&quot;, target).format(&quot;MMMM&quot;)}(#{target})
+        </groovy_template>
+        <multi_arg>
+          <enabled>false</enabled>
+          <type></type>
+        </multi_arg>
+      </transformation>
+      <transformation>
+        <name>get_day</name>
+        <description>Get day of the month</description>
+        <parameters>
+        </parameters>
+        <groovy_template>{target -&gt; Date.parse(&quot;MM/dd/yyyy&quot;, target).format(&quot;EEEE&quot;)}(#{target})
+        </groovy_template>
+        <multi_arg>
+          <enabled>false</enabled>
+          <type></type>
+        </multi_arg>
+      </transformation>
+      <transformation>
+        <name>date_format</name>
+        <description>Format the given date according to the given format pattern</description>
+        <parameters>
+          <parameter>
+            <name>format</name>
+            <description></description>
+            <type>String</type>
+            <optional>false</optional>
+            <default_value></default_value>
+          </parameter>
+        </parameters>
+        <groovy_template>{target -&gt; Date.parse(&quot;MM/dd/yyyy&quot;, target).format(#{format})}(#{target})
+        </groovy_template>
+        <multi_arg>
+          <enabled>false</enabled>
+          <type></type>
+        </multi_arg>
+      </transformation>
+    </transformations>
+  </library>
+  <library>
+    <name>Math</name>
+    <description>Math filters are various transformations to perform math and calculations.</description>
+    <transformations>
+      <transformation>
+        <name>abs</name>
+        <description>Returns the absolute value. The absolute value of the number is the positive equivalent.
+        </description>
+        <parameters>
+        </parameters>
+        <groovy_template>{target-&gt; Math.abs(target)}(#{target})</groovy_template>
+        <multi_arg>
+          <enabled>false</enabled>
+          <type></type>
+        </multi_arg>
+      </transformation>
+      <transformation>
+        <name>acos</name>
+        <description>Calculates the arc cosine of the given value in radians</description>
+        <parameters>
+        </parameters>
+        <groovy_template>{target-&gt; Math.acos(target)}(#{target})</groovy_template>
+        <multi_arg>
+          <enabled>false</enabled>
+          <type></type>
+        </multi_arg>
+      </transformation>
+      <transformation>
+        <name>radToDegress</name>
+        <description>Convert radians to degrees</description>
+        <parameters>
+        </parameters>
+        <groovy_template>{target-&gt; Math.toDegrees(target)}(#{target})</groovy_template>
+        <multi_arg>
+          <enabled>false</enabled>
+          <type></type>
+        </multi_arg>
+      </transformation>
+      <transformation>
+        <name>modulo</name>
+        <description>Modulus 2 values together and return the result, The modulus is the remainder after dividing one
+          number by another.
+        </description>
+        <parameters>
+          <parameter>
+            <name>value</name>
+            <description></description>
+            <type>Decimal</type>
+            <optional>false</optional>
+            <default_value></default_value>
+          </parameter>
+        </parameters>
+        <groovy_template>{target-&gt; target.mod(#{value})}(#{target})</groovy_template>
+        <multi_arg>
+          <enabled>false</enabled>
+          <type></type>
+        </multi_arg>
+      </transformation>
+      <transformation>
+        <name>multiply</name>
+        <description>Multiplies 2 values together and returns the result.</description>
+        <parameters>
+          <parameter>
+            <name>value</name>
+            <description></description>
+            <type>Decimal</type>
+            <optional>false</optional>
+            <default_value></default_value>
+          </parameter>
+        </parameters>
+        <groovy_template>{target-&gt; target*#{value}}(#{target})</groovy_template>
+        <multi_arg>
+          <enabled>false</enabled>
+          <type></type>
+        </multi_arg>
+      </transformation>
+      <transformation>
+        <name>floor</name>
+        <description>Round fractions down to their integer equivalent.</description>
+        <parameters>
+        </parameters>
+        <groovy_template>{target-&gt; Math.round(target)}(#{target})</groovy_template>
+        <multi_arg>
+          <enabled>false</enabled>
+          <type></type>
+        </multi_arg>
+      </transformation>
+      <transformation>
+        <name>degToRad</name>
+        <description>Convert the given value from degrees to radians</description>
+        <parameters>
+        </parameters>
+        <groovy_template>{target-&gt; Math.toRadians(target)}(#{target})</groovy_template>
+        <multi_arg>
+          <enabled>false</enabled>
+          <type></type>
+        </multi_arg>
+      </transformation>
+      <transformation>
+        <name>cos</name>
+        <description>Calculates the cosine of the given value in radians</description>
+        <parameters>
+        </parameters>
+        <groovy_template>{target-&gt; Math.cos(target)}(#{target})</groovy_template>
+        <multi_arg>
+          <enabled>false</enabled>
+          <type></type>
+        </multi_arg>
+      </transformation>
+      <transformation>
+        <name>ciel</name>
+        <description>Round fractions up to their integer equivalent.</description>
+        <parameters>
+        </parameters>
+        <groovy_template>{target-&gt; Math.round(target) +1}(#{target})</groovy_template>
+        <multi_arg>
+          <enabled>false</enabled>
+          <type></type>
+        </multi_arg>
+      </transformation>
+      <transformation>
+        <name>atanh</name>
+        <description>Calculates the inverse hyperbolic tangent of the given value in radians.</description>
+        <parameters>
+        </parameters>
+        <groovy_template>{target-&gt; Math.atanh(target)}(#{target})</groovy_template>
+        <multi_arg>
+          <enabled>false</enabled>
+          <type></type>
+        </multi_arg>
+      </transformation>
+      <transformation>
+        <name>atan</name>
+        <description>Calculates the arc tangent of the given value in radians.</description>
+        <parameters>
+        </parameters>
+        <groovy_template>{target-&gt; Math.atan(target)}(#{target})</groovy_template>
+        <multi_arg>
+          <enabled>false</enabled>
+          <type></type>
+        </multi_arg>
+      </transformation>
+      <transformation>
+        <name>asinh</name>
+        <description>Calculates the inverse hyperbolic sine of the given value in radians.</description>
+        <parameters>
+        </parameters>
+        <groovy_template>{target-&gt; Math.asinh(target)}(#{target})</groovy_template>
+        <multi_arg>
+          <enabled>false</enabled>
+          <type></type>
+        </multi_arg>
+      </transformation>
+      <transformation>
+        <name>asin</name>
+        <description>Calculates the arc sine of the given value in radians.</description>
+        <parameters>
+        </parameters>
+        <groovy_template>{target-&gt; Math.asin(target)}(#{target})</groovy_template>
+        <multi_arg>
+          <enabled>false</enabled>
+          <type></type>
+        </multi_arg>
+      </transformation>
+      <transformation>
+        <name>pow</name>
+        <description>Returns the target value raised to the power of the exponent.</description>
+        <parameters>
+          <parameter>
+            <name>exp</name>
+            <description></description>
+            <type>Decimal</type>
+            <optional>false</optional>
+            <default_value></default_value>
+          </parameter>
+        </parameters>
+        <groovy_template>{target-&gt; Math.pow(target, #{exp})}(#{target})</groovy_template>
+        <multi_arg>
+          <enabled>false</enabled>
+          <type></type>
+        </multi_arg>
+      </transformation>
+      <transformation>
+        <name>devide</name>
+        <description>Divides 2 values together and returns the result.</description>
+        <parameters>
+          <parameter>
+            <name>value</name>
+            <description></description>
+            <type>Decimal</type>
+            <optional>false</optional>
+            <default_value></default_value>
+          </parameter>
+        </parameters>
+        <groovy_template>{target-&gt; target/#{value}}(#{target})</groovy_template>
+        <multi_arg>
+          <enabled>false</enabled>
+          <type></type>
+        </multi_arg>
+      </transformation>
+      <transformation>
+        <name>add</name>
+        <description>Adds 2 values together and returns the result.</description>
+        <parameters>
+          <parameter>
+            <name>value</name>
+            <description></description>
+            <type>Decimal</type>
+            <optional>false</optional>
+            <default_value></default_value>
+          </parameter>
+        </parameters>
+        <groovy_template>{target-&gt; target+#{value}}(#{target})</groovy_template>
+        <multi_arg>
+          <enabled>false</enabled>
+          <type></type>
+        </multi_arg>
+      </transformation>
+      <transformation>
+        <name>acosh</name>
+        <description>Calculates the inverse hyperbolic cosine of the supplied value in radians.</description>
+        <parameters>
+        </parameters>
+        <groovy_template>{target-&gt; Math.acosh(target)}(#{target})</groovy_template>
+        <multi_arg>
+          <enabled>false</enabled>
+          <type></type>
+        </multi_arg>
+      </transformation>
+    </transformations>
+  </library>
+</libraries>

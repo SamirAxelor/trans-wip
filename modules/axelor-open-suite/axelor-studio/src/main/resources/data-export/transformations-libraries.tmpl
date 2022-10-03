@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<%
+	query = com.axelor.inject.Beans.get('com.axelor.apps.studio.db.repo.LibraryRepository' as Class).all()
+
+	libraries = ""
+	query.fetch().each({
+		library ->
+		    tran_formations = ""
+		    library.transformations.each{
+            					transformation ->
+            					parameters = ""
+            					transformation.parameters.each{ parameter ->
+            					    parameters += """\n\t\t\t\t\t<parameter>
+            					        \n\t\t\t\t\t\t<name>${parameter.name}</name>
+            					        \n\t\t\t\t\t\t<description>${parameter.description}</description>
+            					        \n\t\t\t\t\t\t<type>${parameter.getType()}</type>
+            					        \n\t\t\t\t\t\t<optional>${parameter.isOptional}</optional>
+            					        \n\t\t\t\t\t\t<default_value>${parameter.defaultValue}</default_value>
+            					        \n\t\t\t\t\t</parameter>"""
+            					}
+            					tran_formations +="""\n\t\t\t<transformation>
+            					    \n\t\t\t\t<name>${transformation.name}</name>
+            					    \n\t\t\t\t<description>${transformation.description}</description>
+            					    \n\t\t\t\t<parameters>$parameters
+            					    \n\t\t\t\t</parameters>
+            					    \n\t\t\t\t<groovy_template>${transformation.groovyTemplate}</groovy_template>
+            					    \n\t\t\t\t<multi_arg>
+                                    \n\t\t\t\t\t<enabled>${transformation.multiArg}</enabled>
+                                    \n\t\t\t\t\t<type>${transformation.multiArgType}</type>
+                                    \n\t\t\t\t</multi_arg>
+            					    \n\t\t\t</transformation>"""
+            				}
+
+			libraries += """\n\t<library>
+			\n\t\t<name>${library.name}</name>
+			\n\t\t<description>${library.description}</description>
+			\n\t\t<transformations>$tran_formations
+			\n\t\t</transformations>
+			\n\t</library>"""
+
+	})
+
+	if (!libraries.isEmpty()) {
+		libraries = """<libraries>\n""" +  libraries + """\n</libraries>"""
+	}
+
+	out << """$libraries"""
+%>
