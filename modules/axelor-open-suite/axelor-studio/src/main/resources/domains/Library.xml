@@ -9,7 +9,7 @@
     <string name="name" title="Name" required="true" unique="true"/>
     <string name="description" title="Description"/>
     <one-to-many name="transformations" ref="com.axelor.apps.studio.db.Transformation"
-      mappedBy="library" />
+      mappedBy="library"/>
   </entity>
 
 </domain-models>

@@ -9,9 +9,9 @@
     <string name="name" title="Name" required="true"/>
     <string name="description" title="Description"/>
     <string name="type" title="Type" required="true" selection="studio.parameter.type.select"/>
-    <string name="defaultValue" title="Default value" />
-    <boolean name="isOptional"  default="false"/>
-    <many-to-one name="transformation" ref="com.axelor.apps.studio.db.Transformation" />
+    <string name="defaultValue" title="Default value"/>
+    <boolean name="isOptional" default="false"/>
+    <many-to-one name="transformation" ref="com.axelor.apps.studio.db.Transformation"/>
   </entity>
 
 </domain-models>

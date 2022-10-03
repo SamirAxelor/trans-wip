@@ -183,11 +183,11 @@
 
   <menuitem name="studio-libraries" title="Libraries" action="studio.library.view"
     parent="admin-root-general"/>
-  <menuitem name="studio-transformations" title="Transformations" action="studio.Transformation.view"
-            parent="admin-root-general"/>
+  <menuitem name="studio-transformations" title="Transformations"
+    action="studio.Transformation.view" parent="admin-root-general"/>
 
   <action-view name="studio.Transformation.view" title="Transformations"
-               model="com.axelor.apps.studio.db.Transformation">
+    model="com.axelor.apps.studio.db.Transformation">
     <view type="grid" name="transformation-grid"/>
     <view type="form" name="transformation-form"/>
   </action-view>

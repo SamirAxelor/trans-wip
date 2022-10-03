@@ -22,7 +22,8 @@
   </grid>
 
   <action-method name="action-transformation-method-validate-new-parameter">
-    <call class="com.axelor.studio.web.TransformationsLibrariesController" method="validateNewParameter"/>
+    <call class="com.axelor.studio.web.TransformationsLibrariesController"
+      method="validateNewParameter"/>
   </action-method>
 
 </object-views>
